@@ -136,6 +136,71 @@ const clear = function() {
   this.length = 0;
 };
 
+const get = function(index) {
+  if (index === undefined || index < 0 || index >= this.length) throw IndexOutOfBoundsException;
+  let ptr = this.head;
+  let position = 0;
+
+  while(position++ < index) {
+    ptr = ptr.next;
+  }
+
+  return ptr.data;
+};
+
+const set = function(index, value) {
+  if (index === undefined || index < 0 || index >= this.length) throw IndexOutOfBoundsException;
+  let ptr = this.head;
+  let position = 0;
+
+  while(position++ < index) {
+    ptr = ptr.next;
+  }
+
+  const item = ptr.data;
+  ptr.data = value;
+
+  return item;
+};
+
+const insertAt = function(index, value) {
+  if (index === undefined || index < 0 || index >= this.length) throw IndexOutOfBoundsException;
+
+  if(index === 0) return this.addFirst(value);
+
+  let ptr = this.head;
+  let position = 0;
+
+  while(position+1 < index) {
+    ptr = ptr.next;
+    position += 1;
+  }
+
+  const node = new Node(value, ptr.next);
+  this.length += 1;
+  ptr.next = node;
+};
+
+const deleteAt = function(index) {
+  if (index === undefined || index < 0 || index >= this.length) throw IndexOutOfBoundsException;
+
+  if(index === 0) return this.removeFirst();
+
+  let ptr = this.head;
+  let position = 0;
+
+  while(position+1 < index) {
+    ptr = ptr.next;
+    position += 1;
+  }
+
+  const item = ptr.next.data;
+  ptr.next = ptr.next.next;
+  this.length -= 1;
+
+  return item;
+}
+
 SinglyLinkedList.prototype.getFirst = getFirst;
 SinglyLinkedList.prototype.getLast = getLast;
 SinglyLinkedList.prototype.removeFirst = removeFirst;
@@ -147,5 +212,9 @@ SinglyLinkedList.prototype.size = size;
 SinglyLinkedList.prototype.add = add;
 SinglyLinkedList.prototype.remove = remove;
 SinglyLinkedList.prototype.clear = clear;
+SinglyLinkedList.prototype.get = get;
+SinglyLinkedList.prototype.set = set;
+SinglyLinkedList.prototype.insertAt = insertAt;
+SinglyLinkedList.prototype.deleteAt = deleteAt;
 
 module.exports = SinglyLinkedList;
