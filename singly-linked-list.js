@@ -41,7 +41,7 @@ const addFirst = function(value) {
 
 const removeFirst = function() {
   const first = this.head;
-  
+
   if(first === null) throw LIST_EMPTY;
   this.head = this.head.next;
   this.length -= 1;
