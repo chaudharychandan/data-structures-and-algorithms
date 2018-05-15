@@ -38,7 +38,7 @@ Stack.prototype.peek = function() {
   return this.top.data;
 }
 
-Stack.prototype.empty = function() {
+Stack.prototype.isEmpty = function() {
   this.top = null;
   this.length = 0;
 }
@@ -55,6 +55,10 @@ Stack.prototype.search = function(value) {
     ptr = ptr.next;
   }
   return -1;
+}
+
+Stack.prototype.size = function() {
+  return this.length;
 }
 
 module.exports = Stack;
