@@ -15,8 +15,9 @@ class List {
   }
 }
 
-List.prototype.add = function(node) {
-  let index = this.findHashIndex(node.key);
+List.prototype.add = function(key, name, description) {
+  const node = new Node(key, name, description);
+  let index = this.findHashIndex(key);
   let position = index;
   while(!this.isPositionFree(index)) {
     index = (index + 1) % this.entries.length;
