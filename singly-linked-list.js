@@ -17,14 +17,14 @@ class Node {
 
 const getFirst = function() {
   const first = this.head;
-  if(first === null) throw LIST_EMPTY;
+  if(first === null) throw ListEmpty;
 
   return first.data;
 };
 
 const getLast = function() {
   let ptr = this.head;
-  if(ptr === null) throw LIST_EMPTY;
+  if(ptr === null) throw ListEmpty;
 
   while(ptr.next !== null) {
     ptr = ptr.next;
@@ -42,7 +42,7 @@ const addFirst = function(value) {
 const removeFirst = function() {
   const first = this.head;
 
-  if(first === null) throw LIST_EMPTY;
+  if(first === null) throw ListEmpty;
   this.head = this.head.next;
   this.length -= 1;
 
@@ -51,9 +51,9 @@ const removeFirst = function() {
 
 const removeLast = function() {
   let prevPtr = this.head;
-  let ptr = this.head.next;
+  let ptr = prevPtr && prevPtr.next;
 
-  if(prevPtr === null) throw LIST_EMPTY;
+  if(prevPtr === null) throw ListEmpty;
   if(ptr === null)  {
     this.head = null;
     this.length -= 1;
@@ -73,7 +73,7 @@ const removeLast = function() {
 const contains = function(value) {
   let ptr = this.head;
 
-  if(ptr === null) throw LIST_EMPTY;
+  if(ptr === null) throw ListEmpty;
   while(ptr !== null) {
     if(ptr.data === value) {
       return true;
@@ -110,9 +110,9 @@ const add = function(value) {
 
 const remove = function(value) {
   let prevPtr = this.head;
-  let ptr = this.head.next;
+  let ptr = prevPtr && prevPtr.next;
 
-  if(prevPtr === null) throw LIST_EMPTY;
+  if(prevPtr === null) throw ListEmpty;
   if(prevPtr.data === value)  {
     this.head = ptr;
     this.length -= 1;
