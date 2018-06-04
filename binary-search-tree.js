@@ -1,3 +1,6 @@
+const TreeEmpty = 'TreeEmpty';
+const NotFound = 'NotFound';
+
 class Tree {
   constructor() {
     this.root = null;
@@ -39,6 +42,21 @@ function insert (item) {
   }
 }
 
+function search (item) {
+  let node = this.root;
+  while(node) {
+    if (item === node.data) {
+      return true;
+    } else if(item < node.data) {
+      node = node.left;
+    } else {
+      node = node.right;
+    }
+  }
+  return NotFound;
+}
+
 Tree.prototype.insert = insert;
+Tree.prototype.search = search;
 
 module.exports = Tree;
