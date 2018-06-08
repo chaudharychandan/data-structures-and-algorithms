@@ -85,6 +85,35 @@ function successorOf (item) {
   return NotFound;
 }
 
+function predeccesorOf (item) {
+  let node = this.search(item);
+  if (node instanceof Node) {
+    if(node.left) {
+      node = node.left;
+      return this.maximum(node);
+    } else {
+      let parent = node.parent;
+      while (true) {
+        if(parent) {
+          if(parent.right === node) {
+            return parent.data;
+          } else {
+            if (parent.parent) {
+              node = parent;
+              parent = parent.parent;
+            } else {
+              return parent.data;
+            }
+          }
+        } else {
+          break;
+        }
+      }
+    }
+  }
+  return NotFound;
+}
+
 function minimum (root) {
   let node = root || this.root;
   while(true) {
@@ -102,9 +131,28 @@ function minimum (root) {
   return NotFound;
 }
 
+function maximum (root) {
+  let node = root || this.root;
+  while(true) {
+    if (node) {
+      let right = node.right;
+      if(right) {
+        node = right;
+      } else {
+        return node.data;
+      }
+    } else {
+      break;
+    }
+  }
+  return NotFound;
+}
+
 Tree.prototype.insert = insert;
 Tree.prototype.search = search;
 Tree.prototype.successorOf = successorOf;
+Tree.prototype.predeccesorOf = predeccesorOf;
 Tree.prototype.minimum = minimum;
+Tree.prototype.maximum = maximum;
 
 module.exports = Tree;
