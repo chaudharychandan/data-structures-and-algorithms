@@ -148,11 +148,51 @@ function maximum (root) {
   return NotFound;
 }
 
+function remove (item) {
+  let node = this.search(item);
+  if (node instanceof Node) {
+    if (!node.left && !node.right) {
+      let parent = node.parent;
+      if (parent.left === node) {
+        parent.left = null;
+      } else if (parent.right === node) {
+        parent.right = null;
+      }
+	  node.parent = null;
+    } else if (node.left && !node.right) {
+      let parent = node.parent;
+      if(parent.left === node) {
+        parent.left = node.left;
+      } else if (parent.right === node) {
+        parent.right = node.left;
+      }
+      node.left.parent = parent;
+      node.parent = null;
+    } else if (!node.left && node.right) {
+      let parent = node.parent;
+      if(parent.left === node) {
+        parent.left = node.right;
+      } else if (parent.right === node) {
+        parent.right = node.right;
+      }
+      node.right.parent = parent;
+      node.parent = null;
+    } else if (node.left && node.right) {
+      let predeccesorItem = this.predeccesorOf(item);
+      this.delete(predeccesorItem);
+      node.data = predeccesorItem;
+    }
+    return true;
+  }
+  return NotFound;
+}
+
 Tree.prototype.insert = insert;
 Tree.prototype.search = search;
 Tree.prototype.successorOf = successorOf;
 Tree.prototype.predeccesorOf = predeccesorOf;
 Tree.prototype.minimum = minimum;
 Tree.prototype.maximum = maximum;
+Tree.prototype.delete = remove;
 
 module.exports = Tree;
