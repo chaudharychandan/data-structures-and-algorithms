@@ -46,7 +46,7 @@ function search (item) {
   let node = this.root;
   while(node) {
     if (item === node.data) {
-      return true;
+      return node;
     } else if(item < node.data) {
       node = node.left;
     } else {
@@ -56,7 +56,55 @@ function search (item) {
   return NotFound;
 }
 
+function successorOf (item) {
+  let node = this.search(item);
+  if (node instanceof Node) {
+    if(node.right) {
+      node = node.right;
+      return this.minimum(node);
+    } else {
+      let parent = node.parent;
+      while (true) {
+        if(parent) {
+          if(parent.left === node) {
+            return parent.data;
+          } else {
+            if (parent.parent) {
+              node = parent;
+              parent = parent.parent;
+            } else {
+              return parent.data;
+            }
+          }
+        } else {
+          break;
+        }
+      }
+    }
+  }
+  return NotFound;
+}
+
+function minimum (root) {
+  let node = root || this.root;
+  while(true) {
+    if (node) {
+      let left = node.left;
+      if(left) {
+        node = left;
+      } else {
+        return node.data;
+      }
+    } else {
+      break;
+    }
+  }
+  return NotFound;
+}
+
 Tree.prototype.insert = insert;
 Tree.prototype.search = search;
+Tree.prototype.successorOf = successorOf;
+Tree.prototype.minimum = minimum;
 
 module.exports = Tree;
