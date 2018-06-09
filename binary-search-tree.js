@@ -187,6 +187,18 @@ function remove (item) {
   return NotFound;
 }
 
+function traverseInorder() {
+  const list = [];
+  inorder(this.root, list);
+  return list;
+}
+
+function inorder (root, list) {
+  if (root.left) { inorder(root.left, list); }
+  list.push(root.data);
+  if (root.right) { inorder(root.right, list); }
+}
+
 Tree.prototype.insert = insert;
 Tree.prototype.search = search;
 Tree.prototype.successorOf = successorOf;
@@ -194,5 +206,6 @@ Tree.prototype.predeccesorOf = predeccesorOf;
 Tree.prototype.minimum = minimum;
 Tree.prototype.maximum = maximum;
 Tree.prototype.delete = remove;
+Tree.prototype.traverseInorder = traverseInorder;
 
 module.exports = Tree;
