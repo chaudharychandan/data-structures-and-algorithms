@@ -193,10 +193,34 @@ function traverseInorder() {
   return list;
 }
 
+function traversePreorder() {
+  const list = [];
+  preorder(this.root, list);
+  return list;
+}
+
+function traversePostorder() {
+  const list = [];
+  postorder(this.root, list);
+  return list;
+}
+
 function inorder (root, list) {
   if (root.left) { inorder(root.left, list); }
   list.push(root.data);
   if (root.right) { inorder(root.right, list); }
+}
+
+function preorder (root, list) {
+  list.push(root.data);
+  if (root.left) { inorder(root.left, list); }
+  if (root.right) { inorder(root.right, list); }
+}
+
+function postorder (root, list) {
+  if (root.left) { inorder(root.left, list); }
+  if (root.right) { inorder(root.right, list); }
+  list.push(root.data);
 }
 
 Tree.prototype.insert = insert;
@@ -207,5 +231,7 @@ Tree.prototype.minimum = minimum;
 Tree.prototype.maximum = maximum;
 Tree.prototype.delete = remove;
 Tree.prototype.traverseInorder = traverseInorder;
+Tree.prototype.traversePreorder = traversePreorder;
+Tree.prototype.traversePostorder = traversePostorder;
 
 module.exports = Tree;
