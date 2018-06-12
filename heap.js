@@ -50,9 +50,9 @@ function moveUp(index) {
   nodes[index] = node;
 }
 
-function moveDown(index) {
+function moveDown(index, size) {
   const nodes = this.nodes;
-  const count = nodes.length;
+  const count = size || nodes.length;
 
   const node = nodes[index];
 
@@ -96,6 +96,23 @@ function getParentIndex(index) {
   return (index - 1) >> 1;
 }
 
+function sort() {
+  const nodes = this.nodes;
+  let count = nodes.length;
+
+  while(count > 0) {
+    if(count === 0) {
+      return;
+    } else if(count === 1) {
+      return;
+    } else {
+      [nodes[0], nodes[count-1]] = [nodes[count-1], nodes[0]];
+      count = count - 1;
+      this.moveDown(0, count);
+    }
+  }
+}
+
 Heap.prototype.insert = insert;
 Heap.prototype.remove = remove;
 Heap.prototype.getParentIndex = getParentIndex;
@@ -105,5 +122,6 @@ Heap.prototype.moveUp = moveUp;
 Heap.prototype.moveDown = moveDown;
 Heap.prototype.peek = peek;
 Heap.prototype.clear = clear;
+Heap.prototype.sort = sort;
 
 module.exports = Heap;
