@@ -62,23 +62,27 @@ function insert (item) {
     tempNode.parent.setHeight();
 
     setRotationType(path, tempNode);
-
     let balance = tempNode.parent.findBalance();
+
     if(balance > 1) {
       let type = getRotationType(path);
+
       if(type === rotationTypes.LL) {
         this.rotateLL(tempNode);
       } else if (type === rotationTypes.LR) {
 
       }
+
       break;
     } else if (balance < -1) {
       let type = getRotationType(path);
+
       if(type === rotationTypes.LR) {
 
       } else if (type === rotationTypes.RR) {
-
+        this.rotateRR(tempNode);
       }
+
       break;
     }
     tempNode = tempNode.parent;
@@ -121,6 +125,27 @@ function rotateLL(node) {
   node.setHeight();
 }
 
+function rotateRR(node) {
+  let parent = node.parent;
+  parent.right = node.left;
+  if (node.left) {
+    node.left.parent = parent;
+  }
+  if (parent.parent) {
+    node.parent = parent.parent;
+    if (parent.parent.left === parent) {
+      parent.parent.left = node;
+    } else {
+      parent.parent.right = node;
+    }
+  } else if (parent === this.root) {
+    this.root = node;
+  }
+  node.left = parent;
+  node.left.setHeight();
+  node.setHeight();
+}
+
 function setHeight() {
   this.height = 1 + Math.max((this.left || 0) && this.left.height, (this.right || 0) && this.right.height);
 }
@@ -131,7 +156,7 @@ function findBalance() {
   } else if (this.left) {
     return this.left.height;
   } else if (this.right) {
-    return this.right.height;
+    return -this.right.height;
   }
 }
 
@@ -139,5 +164,6 @@ Node.prototype.setHeight = setHeight;
 Node.prototype.findBalance = findBalance;
 AVLTree.prototype.insert = insert;
 AVLTree.prototype.rotateLL = rotateLL;
+AVLTree.prototype.rotateRR = rotateRR;
 
 module.exports = AVLTree;
