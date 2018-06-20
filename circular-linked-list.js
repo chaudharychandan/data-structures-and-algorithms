@@ -50,4 +50,4 @@ CircularLinkedList.prototype.isEmpty = function() {
   return this.length === 0;
 }
 
-console.log(cll);
+module.exports = CircularLinkedList;
