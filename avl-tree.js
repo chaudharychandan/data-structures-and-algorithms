@@ -21,7 +21,12 @@ class Node {
   }
 }
 
-function insertBST(node, item) {
+function insertBST(item) {
+  let node = this.root;
+  if (!node) {
+    this.root = new Node(item);
+    return this.root;
+  }
   let newNode;
   while (true) {
     if (item <= node.data) {
@@ -31,7 +36,6 @@ function insertBST(node, item) {
         node.setHeight();
         break;
       } else {
-        node.setHeight();
         node = node.left;
       }
     } else {
@@ -41,7 +45,6 @@ function insertBST(node, item) {
         node.setHeight();
         break;
       } else {
-        node.setHeight();
         node = node.right;
       }
     }
@@ -56,7 +59,7 @@ function insert (item) {
     return;
   }
 
-  let tempNode = insertBST(node, item);
+  let tempNode = this.insertBST(item);
   let path = [];
   while(tempNode.parent !== null) {
     tempNode.parent.setHeight();
@@ -146,6 +149,14 @@ function rotateRR(node) {
   node.setHeight();
 }
 
+function rotateLR(node) {
+
+}
+
+function rotateRL(node) {
+
+}
+
 function setHeight() {
   this.height = 1 + Math.max((this.left || 0) && this.left.height, (this.right || 0) && this.right.height);
 }
@@ -162,8 +173,11 @@ function findBalance() {
 
 Node.prototype.setHeight = setHeight;
 Node.prototype.findBalance = findBalance;
+AVLTree.prototype.insertBST = insertBST;
 AVLTree.prototype.insert = insert;
 AVLTree.prototype.rotateLL = rotateLL;
+AVLTree.prototype.rotateLR = rotateLR;
+AVLTree.prototype.rotateRL = rotateRL;
 AVLTree.prototype.rotateRR = rotateRR;
 
 module.exports = AVLTree;
