@@ -1,10 +1,3 @@
-const rotationTypes = {
-  LL: 'LL',
-  LR: 'LR',
-  RL: 'RL',
-  RR: 'RR'
-}
-
 class AVLTree {
   constructor() {
     this.root = null;
@@ -53,68 +46,46 @@ function insertBST(item) {
 }
 
 function insert (item) {
-  let node = this.root;
-  if (!node) {
-    this.root = new Node(item);
-    return;
-  }
-
   let tempNode = this.insertBST(item);
-  let path = [];
   while(tempNode.parent !== null) {
     tempNode.parent.setHeight();
-
-    setRotationType(path, tempNode);
     let balance = tempNode.parent.findBalance();
 
     if(balance > 1) {
-      let type = getRotationType(path);
-
-      if(type === rotationTypes.LL) {
-        this.rotateLL(tempNode);
-      } else if (type === rotationTypes.LR) {
-
+      if(item <= tempNode.data) {
+        //LL child
+        this.rotateRight(tempNode);
+      } else {
+        //LR child
+        const right = tempNode.right;
+        this.rotateLeft(right);
+        this.rotateRight(right);
       }
-
       break;
     } else if (balance < -1) {
-      let type = getRotationType(path);
-
-      if(type === rotationTypes.LR) {
-
-      } else if (type === rotationTypes.RR) {
-        this.rotateRR(tempNode);
+      if (item > tempNode.data) {
+        //RR child
+        this.rotateLeft(tempNode);
+      } else {
+        //RL child
+        const left = tempNode.left;
+        this.rotateRight(left);
+        this.rotateLeft(left);
       }
-
       break;
     }
     tempNode = tempNode.parent;
   }
 }
 
-function getRotationType(path) {
-  return path.reverse().join('');
-}
-
-function setRotationType(path, node) {
-  if(node === node.parent.left) {
-    path.push('L');
-  } else {
-    path.push('R');
-  }
-  if(path.length === 3) {
-    path.shift();
-  }
-}
-
-function rotateLL(node) {
+function rotateRight(node) {
   let parent = node.parent;
   parent.left = node.right;
   if (node.right) {
     node.right.parent = parent;
   }
+  node.parent = parent.parent;
   if (parent.parent) {
-    node.parent = parent.parent;
     if (parent.parent.left === parent) {
       parent.parent.left = node;
     } else {
@@ -123,19 +94,20 @@ function rotateLL(node) {
   } else if (parent === this.root) {
     this.root = node;
   }
+  parent.parent = node;
   node.right = parent;
   node.right.setHeight();
   node.setHeight();
 }
 
-function rotateRR(node) {
+function rotateLeft(node) {
   let parent = node.parent;
   parent.right = node.left;
   if (node.left) {
     node.left.parent = parent;
   }
+  node.parent = parent.parent;
   if (parent.parent) {
-    node.parent = parent.parent;
     if (parent.parent.left === parent) {
       parent.parent.left = node;
     } else {
@@ -144,17 +116,10 @@ function rotateRR(node) {
   } else if (parent === this.root) {
     this.root = node;
   }
+  parent.parent = node;
   node.left = parent;
   node.left.setHeight();
   node.setHeight();
-}
-
-function rotateLR(node) {
-
-}
-
-function rotateRL(node) {
-
 }
 
 function setHeight() {
@@ -175,9 +140,7 @@ Node.prototype.setHeight = setHeight;
 Node.prototype.findBalance = findBalance;
 AVLTree.prototype.insertBST = insertBST;
 AVLTree.prototype.insert = insert;
-AVLTree.prototype.rotateLL = rotateLL;
-AVLTree.prototype.rotateLR = rotateLR;
-AVLTree.prototype.rotateRL = rotateRL;
-AVLTree.prototype.rotateRR = rotateRR;
+AVLTree.prototype.rotateLeft = rotateLeft;
+AVLTree.prototype.rotateRight = rotateRight;
 
 module.exports = AVLTree;

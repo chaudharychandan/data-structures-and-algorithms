@@ -158,7 +158,7 @@ function remove (item) {
       } else if (parent.right === node) {
         parent.right = null;
       }
-	  node.parent = null;
+      node.parent = null;
     } else if (node.left && !node.right) {
       let parent = node.parent;
       if(parent.left === node) {
