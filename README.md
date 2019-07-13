@@ -1,6 +1,6 @@
 # Data Structures & Algorithms
 
-### This repository contains the implementation of following problems using Javascript:
+### This repository contains the implementation of the following problems using Javascript:
 
 1. [Selection Sort](selection-sort.js)
 2. [Bubble Sort](bubble-sort.js)
